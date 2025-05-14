@@ -1,55 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using PruebaEurofirms.Domain.Models;
 using PruebaEurofirms.Domain.Repositories;
 
-namespace PuebaEurofirms.Infrastructure
+namespace PruebaEurofirms.Infrastructure.Repositories
 {
     public class InMemoryCharacterRepository : ICharacterRepository
     {
         private readonly List<Character> _characters = new();
 
-        // Metode per obtenir els personatges pel seu estat
-        public Task<IEnumerable<Character>> GetCharactersByStatusAsync(string status)
+        public async Task<IEnumerable<Character>> GetCharactersByStatusAsync(string status)
         {
-            var result = _characters.Where(c => c.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
-            return Task.FromResult(result);
+            var result = _characters.Where(c =>
+                c.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
+            return await Task.FromResult(result);
         }
 
-        // Métode per guardar un personatge
-        public Task<bool> SaveCharacterAsync(IEnumerable<Character> characters)
+        public async Task<bool> SaveCharactersAsync(IEnumerable<Character> characters)
         {
             foreach (var character in characters)
             {
-                //comprovació per evitar duplicats
                 if (!_characters.Any(c => c.CharacterId == character.CharacterId))
                 {
                     _characters.Add(character);
                 }
             }
-            return Task.FromResult(true);
+            return await Task.FromResult(true);
         }
 
-        // Métode para eliminar un personaje mitjançant la seva id
-        public Task<bool> DeleteCharacterAsync(int id)
+        public async Task<bool> DeleteCharacterAsync(int id)
         {
             var character = _characters.FirstOrDefault(c => c.CharacterId == id);
             if (character != null)
             {
                 _characters.Remove(character);
-                return Task.FromResult(true);
+                return await Task.FromResult(true);
             }
-            return Task.FromResult(false);
+            return await Task.FromResult(false);
         }
 
-        // Métode per obtenir un personaje per la seva id
-        public Task<Character> GetCharacterByIdAsync(int id)
+        public async Task<Character> GetCharacterByIdAsync(int id)
         {
             var character = _characters.FirstOrDefault(c => c.CharacterId == id);
-            return Task.FromResult(character);
+            return await Task.FromResult(character);
         }
     }
 }

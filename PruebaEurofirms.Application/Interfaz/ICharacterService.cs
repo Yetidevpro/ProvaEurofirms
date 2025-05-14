@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PruebaEurofirms.Application.Interfaz
+namespace PruebaEurofirms.Application.Interfaces
 {
     public interface ICharacterService
     {
@@ -14,3 +14,4 @@ namespace PruebaEurofirms.Application.Interfaz
         Task<bool> DeleteCharacterAsync(int id);
     }
 }
+

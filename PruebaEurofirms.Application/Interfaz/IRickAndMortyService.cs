@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PruebaEurofirms.Application.Interfaz
+namespace PruebaEurofirms.Application.Interfaces
 {
     public interface IRickAndMortyService
     {
-        Task<IEnumerable<Character>> ImportAllCharactersAsync();
+        Task<IEnumerable<Character>> GetAllCharactersAsync();
+        Task<IEnumerable<Character>> GetCharactersByStatusAsync(string status);
+        Task<bool> DeleteCharacterAsync(int id);
     }
 }

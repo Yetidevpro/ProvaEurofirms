@@ -1,7 +1,7 @@
-﻿using PruebaEurofirms.Application.Interfaz;
-using PruebaEurofirms.Domain.Models;
+﻿using PruebaEurofirms.Domain.Models;
 using PruebaEurofirms.Domain.Repositories;
 using PruebaEurofirms.Application.ExternalDTOs;
+using PruebaEurofirms.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,54 +11,54 @@ using System.Threading.Tasks;
 
 namespace PruebaEurofirms.Application.Services
 {
-    namespace PruebaEurofirms.Application.Services
+    public class RickAndMortyService : IRickAndMortyService
     {
-        public class RickAndMortyService : IRickAndMortyService
+        private readonly HttpClient _httpClient;
+        private readonly ICharacterRepository _repository;
+
+        public RickAndMortyService(HttpClient httpClient, ICharacterRepository repository)
         {
-            private readonly HttpClient _httpClient;
-            private readonly ICharacterRepository _repository;
+            _httpClient = httpClient;
+            _repository = repository;
+        }
 
-            public RickAndMortyService(HttpClient httpClient, ICharacterRepository repository)
+        public async Task<IEnumerable<Character>> GetAllCharactersAsync()
+        {
+            var allCharacters = new List<Character>();
+            string url = "https://rickandmortyapi.com/api/character";
+
+            while (url != null)
             {
-                _httpClient = httpClient;
-                _repository = repository;
-            }
-
-            public async Task<IEnumerable<Character>> ImportAllCharactersAsync()
-            {
-
-                // verifica si ja existeixen a la base de dades.
-                var characters = await _repository.GetCharactersByStatusAsync("");
-                if (characters.Any())
-                    return characters;
-
-                var allCharacters = new List<Character>();
-                string url = "https://rickandmortyapi.com/api/character";
-
-                while (url != null)
-                { 
-                    var response = await _httpClient.GetFromJsonAsync<RickAndMortyApiResponse>(url);
-                    foreach (var character in response.Results)
+                var response = await _httpClient.GetFromJsonAsync<RickAndMortyApiResponse>(url);
+                foreach (var character in response.Results)
+                {
+                    var newCharacter = new Character
                     {
-                        var newCharacter = new Character
-                        {
-                            CharacterId = character.Id,
-                            Name = character.Name,
-                            Status = character.Status,
-                            Gender = character.Gender,
-                            Episodes = character.Episode
-                        };
-
-                        allCharacters.Add(newCharacter);
-                    }
-
-                    url = response.Info.Next;
+                        CharacterId = character.Id,
+                        Name = character.Name,
+                        Status = character.Status,
+                        Gender = character.Gender,
+                        Episodes = character.Episode
+                    };
+                    allCharacters.Add(newCharacter);
                 }
-
-                await _repository.SaveCharacterAsync(allCharacters);
-                return allCharacters;
+                url = response.Info.Next;
             }
+
+            await _repository.SaveCharactersAsync(allCharacters);
+            return allCharacters;
+        }
+
+        public Task<IEnumerable<Character>> GetCharactersByStatusAsync(string status)
+        {
+            return _repository.GetCharactersByStatusAsync(status);
+        }
+
+        public Task<bool> DeleteCharacterAsync(int id)
+        {
+            return _repository.DeleteCharacterAsync(id);
         }
     }
-
 }
+
+  

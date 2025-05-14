@@ -1,10 +1,11 @@
 ﻿using PruebaEurofirms.Application.DTOs;
-using PruebaEurofirms.Application.Interfaz;
+using PruebaEurofirms.Application.ExternalDTOs;
+using PruebaEurofirms.Application.Interfaces;
 using PruebaEurofirms.Domain.Models;
-using PruebaEurofirms.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,47 +13,58 @@ namespace PruebaEurofirms.Application.Services
 {
     public class CharacterService : ICharacterService
     {
-        private readonly ICharacterRepository _repository;
         private readonly IRickAndMortyService _rickAndMortyService;
 
-        public CharacterService(ICharacterRepository repository, IRickAndMortyService rickAndMortyService)
+        public CharacterService(IRickAndMortyService rickAndMortyService)
         {
-            _repository = repository;
             _rickAndMortyService = rickAndMortyService;
         }
 
         public async Task<IEnumerable<CharacterDTO>> ImportCharactersAsync()
         {
-            var characters = await _rickAndMortyService.ImportAllCharactersAsync();
+            var characters = await _rickAndMortyService.GetAllCharactersAsync();
+            var dtoList = new List<CharacterDTO>();
 
-            return characters.Select(c => new CharacterDTO
+            foreach (var c in characters)
             {
-                CharacterId = c.CharacterId,
-                Name = c.Name,
-                Status = c.Status,
-                Gender = c.Gender,
-                Episodes = c.Episodes
-            });
+                dtoList.Add(new CharacterDTO
+                {
+                    CharacterId = c.CharacterId,
+                    Name = c.Name,
+                    Status = c.Status,
+                    Gender = c.Gender,
+                    Episodes = c.Episodes
+                });
+            }
+
+            return dtoList;
         }
 
         public async Task<IEnumerable<CharacterDTO>> GetCharactersByStatusAsync(string status)
         {
-            var characters = await _repository.GetCharactersByStatusAsync(status);
+            var characters = await _rickAndMortyService.GetCharactersByStatusAsync(status);
+            var dtoList = new List<CharacterDTO>();
 
-            return characters.Select(c => new CharacterDTO
+            foreach (var c in characters)
             {
-                CharacterId = c.CharacterId,
-                Name = c.Name,
-                Status = c.Status,
-                Gender = c.Gender,
-                Episodes = c.Episodes
-            });
+                dtoList.Add(new CharacterDTO
+                {
+                    CharacterId = c.CharacterId,
+                    Name = c.Name,
+                    Status = c.Status,
+                    Gender = c.Gender,
+                    Episodes = c.Episodes
+                });
+            }
+
+            return dtoList;
         }
 
         public Task<bool> DeleteCharacterAsync(int id)
         {
-            return _repository.DeleteCharacterAsync(id);
+            return _rickAndMortyService.DeleteCharacterAsync(id);
         }
     }
-
 }
+
+

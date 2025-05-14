@@ -10,7 +10,7 @@ namespace PruebaEurofirms.Domain.Repositories
     public interface ICharacterRepository
     {
         Task<IEnumerable<Character>> GetCharactersByStatusAsync(string status);
-        Task<bool> SaveCharacterAsync(IEnumerable<Character> character);
+        Task<bool> SaveCharactersAsync(IEnumerable<Character> characters);
         Task<bool> DeleteCharacterAsync(int id);
         Task<Character> GetCharacterByIdAsync(int id);
     }
