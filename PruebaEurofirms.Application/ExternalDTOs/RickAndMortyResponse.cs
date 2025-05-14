@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PuebaEurofirms.Infrastructure.ExternalDTOs
+namespace PruebaEurofirms.Application.ExternalDTOs
 {
     public class RickAndMortyApiResponse
     {

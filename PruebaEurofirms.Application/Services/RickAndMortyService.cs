@@ -1,7 +1,7 @@
 ﻿using PruebaEurofirms.Application.Interfaz;
 using PruebaEurofirms.Domain.Models;
 using PruebaEurofirms.Domain.Repositories;
-using PuebaEurofirms.Infrastructure.ExternalDTOs;
+using PruebaEurofirms.Application.ExternalDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

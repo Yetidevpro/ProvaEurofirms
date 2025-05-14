@@ -11,4 +11,8 @@
     <ProjectReference Include="..\PuebaEurofirms.Infrastructure\PuebaEurofirms.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
