@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PruebaEurofirms.Domain\PruebaEurofirms.Domain.csproj" />
+    <ProjectReference Include="..\PuebaEurofirms.Infrastructure\PuebaEurofirms.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
