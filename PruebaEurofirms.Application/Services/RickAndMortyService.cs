@@ -24,7 +24,7 @@ namespace PruebaEurofirms.Application.Services
                 _repository = repository;
             }
 
-            public async Task<IEnumerable<Character>> GetAllCharactersAsync()
+            public async Task<IEnumerable<Character>> ImportAllCharactersAsync()
             {
 
                 // verifica si ja existeixen a la base de dades.

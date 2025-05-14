@@ -9,7 +9,7 @@ namespace PruebaEurofirms.Application.ExternalDTOs
     public class RickAndMortyApiResponse
     {
         public ApiInfo Info { get; set; }
-        public List<CharacterResponse> Results { get; set; }
+        public List<ExternalCharacter> Results { get; set; }
     }
 
 }

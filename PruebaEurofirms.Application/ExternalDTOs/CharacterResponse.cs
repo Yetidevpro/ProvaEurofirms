@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PruebaEurofirms.Application.ExternalDTOs
 {
-    public class CharacterResponse
+    public class ExternalCharacter
     {
         public int Id { get; set; }
         public string Name { get; set; }

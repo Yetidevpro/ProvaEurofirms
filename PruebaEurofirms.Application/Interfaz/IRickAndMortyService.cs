@@ -10,6 +10,6 @@ namespace PruebaEurofirms.Application.Interfaz
 {
     public interface IRickAndMortyService
     {
-        Task<IEnumerable<Character>> GetAllCharactersAsync();
+        Task<IEnumerable<Character>> ImportAllCharactersAsync();
     }
 }
