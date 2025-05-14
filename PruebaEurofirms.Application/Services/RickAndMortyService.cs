@@ -47,7 +47,7 @@ namespace PruebaEurofirms.Application.Services
                     url = response.Info.Next;
                 }
 
-                await _repository.SaveCharactersAsync(allCharacters);
+                await _repository.SaveCharacterAsync(allCharacters);
                 return allCharacters;
             }
         }
