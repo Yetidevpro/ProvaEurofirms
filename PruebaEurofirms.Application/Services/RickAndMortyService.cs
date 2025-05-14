@@ -26,11 +26,17 @@ namespace PruebaEurofirms.Application.Services
 
             public async Task<IEnumerable<Character>> GetAllCharactersAsync()
             {
+
+                // verifica si ja existeixen a la base de dades.
+                var characters = await _repository.GetCharactersByStatusAsync("");
+                if (characters.Any())
+                    return characters;
+
                 var allCharacters = new List<Character>();
                 string url = "https://rickandmortyapi.com/api/character";
 
                 while (url != null)
-                {
+                { 
                     var response = await _httpClient.GetFromJsonAsync<RickAndMortyApiResponse>(url);
                     foreach (var character in response.Results)
                     {
@@ -42,8 +48,10 @@ namespace PruebaEurofirms.Application.Services
                             Gender = character.Gender,
                             Episodes = character.Episode
                         };
+
                         allCharacters.Add(newCharacter);
                     }
+
                     url = response.Info.Next;
                 }
 
