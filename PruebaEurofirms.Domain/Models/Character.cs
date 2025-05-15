@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace PruebaEurofirms.Domain.Models
 {
@@ -20,7 +22,8 @@ namespace PruebaEurofirms.Domain.Models
         [StringLength(100)]
         public string Gender { get; set; }
 
-        [Required]
-        public List<string> Episodes { get; set; } = new List<string>();
+        [NotMapped]
+        public List<string> Episodes { get; set; } = new();
+      
     }
 }

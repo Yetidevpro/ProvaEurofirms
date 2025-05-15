@@ -1,10 +1,17 @@
+using Microsoft.EntityFrameworkCore;
 using PruebaEurofirms.Application.Interfaces;
 using PruebaEurofirms.Application.Services;
 using PruebaEurofirms.Domain.Repositories;
+using PruebaEurofirms.Infrastructure;
 using PruebaEurofirms.Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CharacterDbContext>(options =>
+    options.UseSqlite("Data Source=../Eurofirms.db")); 
+
+builder.Services.AddScoped<ICharacterRepository, SqliteCharacterRepository>();
 
 // Add services to the container.
 
@@ -13,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ICharacterRepository, InMemoryCharacterRepository>();
+builder.Services.AddScoped<ICharacterRepository, SqliteCharacterRepository>();
 builder.Services.AddHttpClient<IRickAndMortyService, RickAndMortyService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 

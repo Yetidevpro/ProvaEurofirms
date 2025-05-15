@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using PruebaEurofirms.Domain.Models;
 using PruebaEurofirms.Domain.Repositories;
 
-namespace PruebaEurofirms.Infrastructure.Repositories
+namespace PuebaEurofirms.Infrastructure.MemoryDatabase
 {
     public class InMemoryCharacterRepository : ICharacterRepository
     {
